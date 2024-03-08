@@ -5,10 +5,9 @@
  * Write a SQL query that finds all action fanatics.
  */
 SELECT
+        c.customer_id,
         c.first_name,
-        c.last_name,
-        category.name,
-        count(*)
+        c.last_name
 FROM customer c
 LEFT JOIN LATERAL (
   SELECT film.film_id
@@ -22,6 +21,6 @@ LEFT JOIN LATERAL (
 JOIN film_category ON r.film_id = film_category.film_id
 JOIN category USING (category_id)
 WHERE category.name = 'Action'
-GROUP BY c.first_name, c.last_name, category.name
+GROUP BY c.first_name, c.last_name, category.name, c.customer_id
 HAVING count(*) >= 4
-ORDER BY c.first_name, c.last_name;
+ORDER BY c.customer_id;
